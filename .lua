@@ -101,6 +101,6 @@ Callback = function(Value)
 _G.gm = Value
       while wait() do
         if _G.gm == false then break end
-        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["MountService"]["RF"]["Normal_Gacha_Mount"]:InvokeServer(Gem)
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["MountService"]["RF"]["Normal_Gacha_Mount"]:InvokeServer("Gem")
       end
   end})
