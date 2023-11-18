@@ -76,9 +76,9 @@ T1:AddToggle({
 Name = "Claim Gifts",
 Default = false,
 Callback = function(Value)
-_G.or = Value
+_G.org = Value
       while wait() do
-        if _G.or == false then break end
+        if _G.org == false then break end
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RewardService"]["RF"]["ClaimOnlineReward"]:InvokeServer(1)
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RewardService"]["RF"]["ClaimOnlineReward"]:InvokeServer(2)
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RewardService"]["RF"]["ClaimOnlineReward"]:InvokeServer(3)
