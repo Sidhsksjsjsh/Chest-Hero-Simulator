@@ -94,7 +94,7 @@ _G.or = Value
       end
   end})
 
-T1:AddToggle({
+T3:AddToggle({
 Name = "Gacha Mount [ Gems ]",
 Default = false,
 Callback = function(Value)
