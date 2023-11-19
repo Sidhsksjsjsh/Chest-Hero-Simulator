@@ -5,6 +5,7 @@ local chr = LocPlayer.Character
 local hum = chr.Humanoid
 local root = chr.HumanoidRootPart
 local TweenService = game:GetService("TweenService")
+local number = math.huge
 
 local function workspaceChildren(str,func)
 for _,v in pairs(str:GetChildren()) do
@@ -68,58 +69,40 @@ PremiumOnly = false
 })
 
 local D = Window:MakeTab({
-Name = "Teleport Settings",
+Name = "Config",
 Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
 -- atk, atk_cutdown, Atk_Range, c_health, combo, counter, crit, defense, dodge, DungeonLevel, health, ignore_lifesteal, lifesteal
+-- :SetAttribute("DMG",number)
+D:AddButton({
+Name = "Infinite Damage",
+Callback = function()
+      LocPlayer:SetAttribute("atk",number)
+  end    
+})
 
-D:AddSlider(
-    {Name = "Over Height", Default = _G.Settings.Height, Min = 5, Max = 10, Color = Color3.fromRGB(255,215,0), Callback = function(H)
-            _G.Settings.Height = H
-            end}
-)
-D:AddSlider(
-    {Name = "Under Height", Default = _G.Settings.Height1, Min = -15, Max = -10, Color = Color3.fromRGB(255,215,0), Callback = function(H)
-            _G.Settings.Height1 = H
-            end}
-)
-D:AddSlider(
-    {Name = "Behind Distance", Default = 0.5, Min = 0, Max = 20, Color = Color3.fromRGB(255,215,0), Callback = function(H)
-            _G.Settings.distance = H
-            end}
-)
+D:AddButton({
+Name = "Infinite Range",
+Callback = function()
+      LocPlayer:SetAttribute("Atk_Range",number)
+  end    
+})
 
-D:AddToggle({
-Name = "Method (false = TP, true = tweening)",
-Default = method.Teleport,
-Callback = function(Value)
-    method.Teleport = Value
-end})
+D:AddButton({
+Name = "Infinite all",
+Callback = function()
+      LocPlayer:SetAttribute("combo",number)
+      LocPlayer:SetAttribute("counter",number)
+      LocPlayer:SetAttribute("crit",number)
+      LocPlayer:SetAttribute("defense",number)
+      LocPlayer:SetAttribute("dodge",number)
+      LocPlayer:SetAttribute("lifesteal",number)
+  end    
+})
 
-D:AddToggle({
-Name = "Teleport OnTop",
-Default = method.Top,
-Callback = function(Value)
-    method.Top = Value
-end})
-
-D:AddToggle({
-Name = "Teleport Under",
-Default = method.Under,
-Callback = function(Value)
-    method.Under = Value
-end})
-
-D:AddToggle({
-Name = "Teleport Behind",
-Default = method.Behind,
-Callback = function(Value)
-    method.Behind = Value
-end})
-
-T2:AddTextbox({
+--[[T2:AddTextbox({
   Name = "Dungeon Level (1-60)",
   Default = "1",
   TextDisappear = true,
@@ -127,11 +110,12 @@ T2:AddTextbox({
       _G.DungeonLevel = Value
   end  
 })
+]]
 
 T2:AddButton({
 Name = "Enter Dungeon",
 Callback = function()
-      game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["DungeonService"]["RF"]["Enter_Level"]:InvokeServer(tonumber(_G.DungeonLevel))
+      game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["DungeonService"]["RF"]["Enter_Level"]:InvokeServer(LocPlayer:GetAttribute("DungeonLevel"))
   end    
 })
 
