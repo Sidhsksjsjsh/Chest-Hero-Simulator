@@ -50,6 +50,16 @@ elseif method.Teleport == false then
     end
 end
 
+local function sell()
+    game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Sell_Equipment"]:InvokeServer()
+end
+
+local function equip()
+    game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Change_Equipment"]:InvokeServer()
+end
+
+--chest_cd, chest_wait
+
 local T1 = Window:MakeTab({
 Name = "Main",
 Icon = "rbxassetid://",
