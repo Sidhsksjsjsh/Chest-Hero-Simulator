@@ -154,6 +154,8 @@ _G.oc = Value
       while wait() do
         if _G.oc == false then break end
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Open_Chest"]:InvokeServer()
+        LocPlayer:SetAttribute("chest_wait",0)
+        LocPlayer:SetAttribute("chest_cd",0)
       end
   end})
 
