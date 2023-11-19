@@ -91,28 +91,28 @@ D:AddSlider(
 
 D:AddToggle({
 Name = "Method (false = TP, true = tweening)",
-Default = false,
+Default = method.Teleport,
 Callback = function(Value)
     method.Teleport = Value
 end})
 
 D:AddToggle({
 Name = "Teleport OnTop",
-Default = false,
+Default = method.Top,
 Callback = function(Value)
     method.Top = Value
 end})
 
 D:AddToggle({
 Name = "Teleport Under",
-Default = false,
+Default = method.Under,
 Callback = function(Value)
     method.Under = Value
 end})
 
 D:AddToggle({
 Name = "Teleport Behind",
-Default = false,
+Default = method.Behind,
 Callback = function(Value)
     method.Behind = Value
 end})
@@ -135,7 +135,7 @@ Callback = function()
 
 -- n.HumanoidRootPart.CFrame
 T1:AddToggle({
-Name = "Auto Kill",
+Name = "Auto Kill ( ☠️brutal☠️ )",
 Default = false,
 Callback = function(Value)
 _G.InsKill = Value
@@ -143,7 +143,11 @@ _G.InsKill = Value
         if _G.InsKill == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c})
+                if v and c then
+                    Teleport(n.HumanoidRootPart)
+                end
+                        
+                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c})
             end)
           end)
       end
