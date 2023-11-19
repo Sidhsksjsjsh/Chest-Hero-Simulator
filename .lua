@@ -40,11 +40,11 @@ if method.Teleport == true then
         end
 elseif method.Teleport == false then
         if method.Top == true then
-            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.Position * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)}):Play()
+            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)}):Play()
         elseif method.Under == true then
-            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.Position * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,_G.Settings.Height1,0)}):Play()
+            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,_G.Settings.Height1,0)}):Play()
         elseif method.Behind == true then
-            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.Position * CFrame.new(0,0,_G.Settings.distance)}):Play()
+            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.new(0,0,_G.Settings.distance)}):Play()
         end
     end
 end
