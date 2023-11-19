@@ -73,6 +73,8 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
+-- atk, atk_cutdown, Atk_Range, c_health, combo, counter, crit, defense, dodge, DungeonLevel, health, ignore_lifesteal, lifesteal
+
 D:AddSlider(
     {Name = "Over Height", Default = _G.Settings.Height, Min = 5, Max = 10, Color = Color3.fromRGB(255,215,0), Callback = function(H)
             _G.Settings.Height = H
