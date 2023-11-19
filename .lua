@@ -133,6 +133,7 @@ Callback = function()
   end    
 })
 
+-- n.HumanoidRootPart.CFrame
 T1:AddToggle({
 Name = "Auto Kill",
 Default = false,
