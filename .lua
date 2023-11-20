@@ -15,6 +15,10 @@ end
 
 local workspace = game:GetService("Workspace")
 
+local function stopMoving(str)
+    str.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+end
+
 _G.Settings = {
     Height = 20,
     Height1 = -20,
@@ -202,6 +206,38 @@ _G.bringAsshole = Value
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
                 c.CFrame = root.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)
+            end)
+          end)
+      end
+end    
+})
+
+T1:AddToggle({
+Name = "Freeze V1 [Testing]",
+Default = false,
+Callback = function(Value)
+_G.bringAsshole = Value
+      while wait() do
+        if _G.bringAsshole == false then break end
+        workspaceChildren(workspace["DungeonFolder"],function(v)
+            workspaceChildren(v["Enemy_Folder"],function(c)
+                stopMoving(c)
+            end)
+          end)
+      end
+end    
+})
+
+T1:AddToggle({
+Name = "Freeze V2 [Testing]",
+Default = false,
+Callback = function(Value)
+_G.bringAsshole = Value
+      while wait() do
+        if _G.bringAsshole == false then break end
+        workspaceChildren(workspace["DungeonFolder"],function(v)
+            workspaceChildren(v["Enemy_Folder"],function(c)
+                c.Humanoid.WalkSpeed = 0
             end)
           end)
       end
