@@ -205,14 +205,14 @@ _G.bringAsshole = Value
         if _G.bringAsshole == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                c.CFrame = root.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)
+                c.HumanoidRootPart.CFrame = root.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)
             end)
           end)
       end
 end    
 })
 
-T1:AddToggle({
+--[[T1:AddToggle({
 Name = "Freeze V1 [Testing]",
 Default = false,
 Callback = function(Value)
@@ -227,9 +227,10 @@ _G.bringAsshole = Value
       end
 end    
 })
+]]
 
 T1:AddToggle({
-Name = "Freeze V2 [Testing]",
+Name = "Freeze NPC [Testing]",
 Default = false,
 Callback = function(Value)
 _G.bringAsshole = Value
