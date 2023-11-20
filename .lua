@@ -245,7 +245,29 @@ Callback = function()
   end    
 })
 
--- n.HumanoidRootPart.CFrame
+local function KillEnemy(str,full)
+if #str["Enemy_Folder"]:GetChildren() == 1 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full})
+elseif #str["Enemy_Folder"]:GetChildren() == 2 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 3 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 4 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 5 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 6 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 7 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 8 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full,full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 9 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full,full,full,full,full})
+elseif #str["Enemy_Folder"]:GetChildren() == 10 then
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full,full,full,full,full,full})
+end
+end
 T1:AddToggle({
 Name = "Auto Kill ( ☠️brutal☠️ )",
 Default = false,
@@ -255,7 +277,8 @@ _G.InsKill = Value
         if _G.InsKill == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
+                KillEnemy(v,c)
+                --game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
             end)
           end)
       end
