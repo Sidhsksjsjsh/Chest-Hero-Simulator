@@ -37,7 +37,7 @@ end
 
 local Settings = {
     Height = LocPlayer:GetAttribute("Atk_Range"),
-    Height1 = -LocPlayer:GetAttribute("Atk_Range"),
+    Height1 = LocPlayer:GetAttribute("Atk_Range"),
     distance = LocPlayer:GetAttribute("Atk_Range")
 }
 
@@ -55,7 +55,7 @@ if method.Teleport == true then
         if method.Top == true then
             LocPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,Settings.Height,0)
         elseif method.Under == true then
-            LocPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,Settings.Height1,0)
+            LocPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,-Settings.Height1,0)
         elseif method.Behind == true then
             LocPlayer.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0,0,Settings.distance)
         end
