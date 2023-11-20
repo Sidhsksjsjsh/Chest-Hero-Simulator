@@ -6,6 +6,7 @@ local hum = chr.Humanoid
 local root = chr.HumanoidRootPart
 local TweenService = game:GetService("TweenService")
 local number = math.huge
+local offset = Vector3.new(20,0,0)
 
 local function workspaceChildren(str,func)
 for _,v in pairs(str:GetChildren()) do
@@ -63,14 +64,20 @@ local function equip()
 end
 
 local function NpcCFrame(str)
-local offset = Vector3.new(20, 0, 0)
-        local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.HumanoidRootPart.Orientation.Y),0))
+local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.HumanoidRootPart.Orientation.Y),0))
         local newPosition = LocPlayer.Character.HumanoidRootPart.Position + rotatedOffset
 
         local lookVector = (newPosition - LocPlayer.Character.HumanoidRootPart.Position).unit
         local orientation = Vector3.new(lookVector.x,0,lookVector.z).unit
         local angle = math.atan2(orientation.z,orientation.x)
         str:SetPrimaryPartCFrame(CFrame.new(newPosition) * CFrame.Angles(0,angle,0))
+end
+
+local function SafeNPC(str)
+local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.HumanoidRootPart.Orientation.Y),0))
+        local newPosition = LocPlayer.Character.HumanoidRootPart.Position + rotatedOffset
+
+        str:SetPrimaryPartCFrame(CFrame.new(newPosition))
 end
 
 --chest_cd, chest_wait
@@ -214,12 +221,12 @@ _G.ct = Value
   end})
 
 T4:AddToggle({
-Name = "Bring Asshole [Testing]",
+Name = "Bring Asshole V1 [Testing]",
 Default = false,
 Callback = function(Value)
-_G.bringAsshole = Value
+_G.bringAsshole1 = Value
       while wait() do
-        if _G.bringAsshole == false then break end
+        if _G.bringAsshole1 == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
                 NpcCFrame(c)
@@ -229,30 +236,29 @@ _G.bringAsshole = Value
 end    
 })
 
---[[T1:AddToggle({
-Name = "Freeze V1 [Testing]",
+T4:AddToggle({
+Name = "Bring Asshole V2 [Testing]",
 Default = false,
 Callback = function(Value)
-_G.bringAsshole = Value
+_G.bringAsshole2 = Value
       while wait() do
-        if _G.bringAsshole == false then break end
+        if _G.bringAsshole2 == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                stopMoving(c)
+                SafeNPC(c)
             end)
           end)
       end
 end    
 })
-]]
 
 T4:AddToggle({
 Name = "Freeze NPC [Testing]",
 Default = false,
 Callback = function(Value)
-_G.bringAsshole = Value
+_G.Freeze = Value
       while wait() do
-        if _G.bringAsshole == false then break end
+        if _G.Freeze == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
                 c.Humanoid.WalkSpeed = 0
