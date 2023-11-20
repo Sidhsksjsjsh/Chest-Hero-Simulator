@@ -23,7 +23,7 @@ end
 local Settings = {
     Height = 20,
     Height1 = -20,
-    distance = 2.5
+    distance = 10
 }
 
 local method = {
@@ -255,7 +255,7 @@ _G.InsKill = Value
         if _G.InsKill == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
+                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c})
                 Teleport(c.HumanoidRootPart)
             end)
           end)
