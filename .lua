@@ -80,6 +80,14 @@ local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.H
         str:SetPrimaryPartCFrame(CFrame.new(newPosition))
 end
 
+local function Calculate(str)
+    return #str["Enemy_Folder"]:GetChildren()
+end
+
+local function CalculateRandom(str)
+    return #str["Enemy_Folder"]:GetChildren()[math.random(1,#str["Enemy_Folder"]:GetChildren())]
+end
+
 --chest_cd, chest_wait
 
 local T1 = Window:MakeTab({
@@ -238,12 +246,16 @@ Callback = function()
 })
 ]]
 
-T2:AddButton({
+T2:AddToggle({
 Name = "Enter Dungeon",
-Callback = function()
-      game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["DungeonService"]["RF"]["Enter_Level"]:InvokeServer(LocPlayer:GetAttribute("DungeonLevel"))
-  end    
-})
+Default = false,
+Callback = function(Value)
+_G.dngn = Value
+      while wait() do
+        if _G.dngn == false then break end
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["DungeonService"]["RF"]["Enter_Level"]:InvokeServer(LocPlayer:GetAttribute("DungeonLevel"))
+      end
+  end})
 
 local function KillEnemy(str,full)
 if #str["Enemy_Folder"]:GetChildren() == 1 then
@@ -277,8 +289,8 @@ _G.InsKill = Value
         if _G.InsKill == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                KillEnemy(v,c)
-                --game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
+                --KillEnemy(v,c)
+                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
             end)
           end)
       end
