@@ -62,6 +62,17 @@ local function equip()
     game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Change_Equipment"]:InvokeServer()
 end
 
+local function NpcCFrame(str)
+local offset = Vector3.new(20, 0, 0)
+        local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.HumanoidRootPart.Orientation.Y),0))
+        local newPosition = LocPlayer.Character.HumanoidRootPart.Position + rotatedOffset
+
+        local lookVector = (newPosition - LocPlayer.Character.HumanoidRootPart.Position).unit
+        local orientation = Vector3.new(lookVector.x,0,lookVector.z).unit
+        local angle = math.atan2(orientation.z,orientation.x)
+        str:SetPrimaryPartCFrame(CFrame.new(newPosition) * CFrame.Angles(0,angle,0))
+end
+
 --chest_cd, chest_wait
 
 local T1 = Window:MakeTab({
@@ -84,6 +95,12 @@ PremiumOnly = false
 
 local D = Window:MakeTab({
 Name = "Config",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T4 = Window:MakeTab({
+Name = "NPC Settings",
 Icon = "rbxassetid://",
 PremiumOnly = false
 })
@@ -196,7 +213,7 @@ _G.ct = Value
       end
   end})
 
-T1:AddToggle({
+T4:AddToggle({
 Name = "Bring Asshole [Testing]",
 Default = false,
 Callback = function(Value)
@@ -205,7 +222,7 @@ _G.bringAsshole = Value
         if _G.bringAsshole == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                c.HumanoidRootPart.CFrame = root.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)
+                NpcCFrame(c)
             end)
           end)
       end
@@ -229,7 +246,7 @@ end
 })
 ]]
 
-T1:AddToggle({
+T4:AddToggle({
 Name = "Freeze NPC [Testing]",
 Default = false,
 Callback = function(Value)
