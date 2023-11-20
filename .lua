@@ -38,11 +38,11 @@ local method = {
 local function Teleport(target)
 if method.Teleport == true then
         if method.Top == true then
-            root.CFrame = CFrame.new(target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,Settings.Height,0))
+            root.CFrame = target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,Settings.Height,0)
         elseif method.Under == true then
-            root.CFrame = CFrame.new(target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,Settings.Height1,0))
+            root.CFrame = target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,Settings.Height1,0)
         elseif method.Behind == true then
-            root.CFrame = CFrame.new(target.CFrame * CFrame.new(0,0,Settings.distance))
+            root.CFrame = target.CFrame * CFrame.new(0,0,Settings.distance)
         end
 elseif method.Teleport == false then
         if method.Top == true then
@@ -185,7 +185,7 @@ Callback = function(Value)
         method.Teleport = Value
 end})
 
-T5:AddToggle({
+--[[T5:AddToggle({
 Name = "Start Teleport",
 Default = false,
 Callback = function(Value)
@@ -200,6 +200,7 @@ _G.StartTP = Value
       end
 end    
 })
+]]
 
 D:AddButton({
 Name = "Infinite Damage",
@@ -255,6 +256,7 @@ _G.InsKill = Value
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
                 game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
+                Teleport(c.HumanoidRootPart)
             end)
           end)
       end
