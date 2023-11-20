@@ -36,9 +36,9 @@ local function stopMoving(str)
 end
 
 local Settings = {
-    Height = 20,
-    Height1 = -20,
-    distance = 8
+    Height = LocPlayer:GetAttribute("Atk_Range"),
+    Height1 = -LocPlayer:GetAttribute("Atk_Range"),
+    distance = LocPlayer:GetAttribute("Atk_Range")
 }
 
 local method = {
@@ -182,28 +182,28 @@ T5:AddSlider({
 
 T5:AddToggle({
 Name = "OnTop Teleport",
-Default = false,
+Default = method.Top,
 Callback = function(Value)
         method.Top = Value
 end})
 
 T5:AddToggle({
 Name = "Under Teleport",
-Default = false,
+Default = method.Under,
 Callback = function(Value)
         method.Under = Value
 end})
 
 T5:AddToggle({
 Name = "Behind Teleport",
-Default = false,
+Default = method.Behind,
 Callback = function(Value)
         method.Behind = Value
 end})
 
 T5:AddToggle({
 Name = "Teleport Method",
-Default = false,
+Default = method.Teleport,
 Callback = function(Value)
         method.Teleport = Value
 end})
@@ -232,12 +232,13 @@ Callback = function()
   end    
 })
 
-D:AddButton({
+--[[D:AddButton({
 Name = "Infinite Range",
 Callback = function()
       LocPlayer:SetAttribute("Atk_Range",number)
   end    
 })
+]]
 
 D:AddButton({
 Name = "Infinite all",
@@ -321,6 +322,15 @@ _G.Killmf = Value
       while wait() do
         if _G.Killmf == false then break end
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
       end
   end})
 
