@@ -23,14 +23,14 @@ end
 local Settings = {
     Height = 20,
     Height1 = -20,
-    distance = 10
+    distance = 8
 }
 
 local method = {
     Top = false,
     Under = false,
-    Behind = false,
-    Teleport = false
+    Behind = true,
+    Teleport = true
 }
 
 --workspace["DungeonFolder"]:FindFirstChild("16")["Enemy_Folder"]["Epic_10"]
@@ -255,8 +255,7 @@ _G.InsKill = Value
         if _G.InsKill == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c})
-                Teleport(c.HumanoidRootPart)
+                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
             end)
           end)
       end
@@ -308,6 +307,22 @@ _G.ct = Value
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["TaskService"]["RF"]["Claim_TaskReward"]:InvokeServer()
       end
   end})
+
+T1:AddToggle({
+Name = "Teleport To Enemy",
+Default = false,
+Callback = function(Value)
+_G.tte = Value
+      while wait() do
+        if _G.tte == false then break end
+        workspaceChildren(workspace["DungeonFolder"],function(v)
+            workspaceChildren(v["Enemy_Folder"],function(c)
+                Teleport(c.HumanoidRootPart)
+            end)
+          end)
+      end
+end    
+})
 
 T4:AddToggle({
 Name = "Bring Asshole V1 [Testing]",
