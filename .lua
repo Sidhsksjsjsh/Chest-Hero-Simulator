@@ -20,7 +20,7 @@ local function stopMoving(str)
     str.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
 end
 
-_G.Settings = {
+local Settings = {
     Height = 20,
     Height1 = -20,
     distance = 1.5
@@ -38,19 +38,19 @@ local method = {
 local function Teleport(target)
 if method.Teleport == true then
         if method.Top == true then
-            root.CFrame = CFrame.new(target.Position * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0))
+            root.CFrame = CFrame.new(target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,Settings.Height,0))
         elseif method.Under == true then
-            root.CFrame = CFrame.new(target.Position * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,_G.Settings.Height1,0))
+            root.CFrame = CFrame.new(target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,Settings.Height1,0))
         elseif method.Behind == true then
-            root.CFrame = CFrame.new(target.Position * CFrame.new(0,0,_G.Settings.distance))
+            root.CFrame = CFrame.new(target.CFrame * CFrame.new(0,0,Settings.distance))
         end
 elseif method.Teleport == false then
         if method.Top == true then
-            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,_G.Settings.Height,0)}):Play()
+            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.Angles(math.rad(-90),0,0) + Vector3.new(0,Settings.Height,0)}):Play()
         elseif method.Under == true then
-            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,_G.Settings.Height1,0)}):Play()
+            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.Angles(math.rad(90),0,0) + Vector3.new(0,Settings.Height1,0)}):Play()
         elseif method.Behind == true then
-            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.new(0,0,_G.Settings.distance)}):Play()
+            TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out,0,false,0),{CFrame = target.CFrame * CFrame.new(0,0,Settings.distance)}):Play()
         end
     end
 end
@@ -112,8 +112,95 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
--- atk, atk_cutdown, Atk_Range, c_health, combo, counter, crit, defense, dodge, DungeonLevel, health, ignore_lifesteal, lifesteal
--- :SetAttribute("DMG",number)
+local T5 = Window:MakeTab({
+Name = "Teleport Settings",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+T5:AddSlider({
+  Name = "OnTop Distance",
+  Min = 0,
+  Max = 100,
+  Default = Settings.Height,
+  Color = Color3.fromRGB(255,255,255),
+  Increment = 1,
+  ValueName = "Distance",
+  Callback = function(Value)
+     Settings.Height = Value
+  end    
+})
+
+T5:AddSlider({
+  Name = "Under Distance",
+  Min = 0,
+  Max = 100,
+  Default = Settings.Height1,
+  Color = Color3.fromRGB(255,255,255),
+  Increment = 1,
+  ValueName = "Distance",
+  Callback = function(Value)
+     Settings.Height1 = Value
+  end    
+})
+
+T5:AddSlider({
+  Name = "Behind Distance",
+  Min = 0,
+  Max = 100,
+  Default = Settings.distance,
+  Color = Color3.fromRGB(255,255,255),
+  Increment = 1,
+  ValueName = "Distance",
+  Callback = function(Value)
+     Settings.distance = Value
+  end    
+})
+
+T5:AddToggle({
+Name = "OnTop Teleport",
+Default = false,
+Callback = function(Value)
+        method.Top = Value
+end})
+
+T5:AddToggle({
+Name = "Under Teleport",
+Default = false,
+Callback = function(Value)
+        method.Under = Value
+end})
+
+T5:AddToggle({
+Name = "Behind Teleport",
+Default = false,
+Callback = function(Value)
+        method.Behind = Value
+end})
+
+T5:AddToggle({
+Name = "Teleport Method",
+Default = false,
+Callback = function(Value)
+        method.Teleport = Value
+end})
+
+T5:AddToggle({
+Name = "Start Teleport",
+Default = false,
+Callback = function(Value)
+_G.StartTP = Value
+      while wait() do
+        if _G.StartTP == false then break end
+        workspaceChildren(workspace["DungeonFolder"],function(v)
+            workspaceChildren(v["Enemy_Folder"],function(c)
+                Teleport(c.HumanoidRootPart)
+            end)
+          end)
+      end
+end    
+})
+
 D:AddButton({
 Name = "Infinite Damage",
 Callback = function()
