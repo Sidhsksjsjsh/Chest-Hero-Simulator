@@ -7,6 +7,21 @@ local root = chr.HumanoidRootPart
 local TweenService = game:GetService("TweenService")
 local number = math.huge
 local offset = Vector3.new(20,0,0)
+local enemys = nil
+
+local mt = getrawmetatable(game);
+setreadonly(mt,false)
+local namecall = mt.__namecall
+
+mt.__namecall = newcclosure(function(self, ...)
+	local Method = getnamecallmethod()
+	local Args = {...}
+
+	if Method == 'InvokeServer' and self.Name == 'Start_Attack' then
+        enemys = Args[1]
+end
+	return namecall(self, ...) 
+end)
 
 local function workspaceChildren(str,func)
 for _,v in pairs(str:GetChildren()) do
@@ -251,7 +266,7 @@ Name = "Enter Dungeon",
 Default = false,
 Callback = function(Value)
 _G.dngn = Value
-      while wait() do
+      while wait(1) do
         if _G.dngn == false then break end
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["DungeonService"]["RF"]["Enter_Level"]:InvokeServer(LocPlayer:GetAttribute("DungeonLevel"))
       end
@@ -280,8 +295,9 @@ elseif #str["Enemy_Folder"]:GetChildren() == 10 then
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({full,full,full,full,full,full,full,full,full,full})
 end
 end
+
 T1:AddToggle({
-Name = "Auto Kill ( ☠️brutal☠️ )",
+Name = "Auto Kill V1",
 Default = false,
 Callback = function(Value)
 _G.InsKill = Value
@@ -296,6 +312,17 @@ _G.InsKill = Value
       end
 end    
 })
+
+T1:AddToggle({
+Name = "Auto Kill V2",
+Default = false,
+Callback = function(Value)
+_G.Killmf = Value
+      while wait() do
+        if _G.Killmf == false then break end
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+      end
+  end})
 
 T1:AddToggle({
 Name = "Open Chest",
