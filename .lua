@@ -106,8 +106,8 @@ end
 local function listenToChildrenChanges()
 workspaceChildren(workspace["DungeonFolder"],function(v)
    workspaceChildren(v["Enemy_Folder"],function(minion)
-	if minion:IsA("Model") and minion:FindFirstChild("Humanoid") then
-            minion.Humanoid:GetPropertyChangedSignal("Position"):Connect(function()
+	if minion:IsA("Model") and minion:FindFirstChild("Humanoid") or minion:FindFirstChild("HumanoidRootPart") then
+            minion.HumanoidRootPart:GetPropertyChangedSignal("Position"):Connect(function()
                 minion.Humanoid.WalkSpeed = 0
             end)
         end
