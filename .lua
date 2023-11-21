@@ -38,7 +38,8 @@ end
 local Settings = {
     Height = LocPlayer:GetAttribute("Atk_Range"),
     Height1 = LocPlayer:GetAttribute("Atk_Range"),
-    distance = 9
+    distance = 10,
+    enemyd = -10
 }
 
 local method = {
@@ -99,7 +100,7 @@ local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.H
 end
 
 local function SafeNPC(str)
-str.HumanoidRootPart.CFrame = LocPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,Settings.distance)
+str.HumanoidRootPart.CFrame = LocPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,Settings.enemyd)
 end
 
 local function Calculate(str)
@@ -419,6 +420,15 @@ _G.bringAsshole1 = Value
 end    
 })
 ]]
+
+T4:AddTextbox({
+  Name = "Bring Distance",
+  Default = Settings.enemyd,
+  TextDisappear = false,
+  Callback = function(Value)
+     Settings.enemyd = Value
+   end  
+})
 
 T4:AddToggle({
 Name = "Bring Enemy",
