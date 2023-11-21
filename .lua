@@ -38,7 +38,7 @@ end
 local Settings = {
     Height = LocPlayer:GetAttribute("Atk_Range"),
     Height1 = LocPlayer:GetAttribute("Atk_Range"),
-    distance = LocPlayer:GetAttribute("Atk_Range")
+    distance = 9
 }
 
 local method = {
@@ -78,6 +78,16 @@ local function equip()
     game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Change_Equipment"]:InvokeServer()
 end
 
+local function AttackDummy(str)
+	local args = {
+    [1] = {
+        [1] = workspace["NPCs"]["Targets"]["Target"]
+    }
+}
+
+game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(unpack(args))
+end
+
 local function NpcCFrame(str)
 local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.HumanoidRootPart.Orientation.Y),0))
         local newPosition = LocPlayer.Character.HumanoidRootPart.Position + rotatedOffset
@@ -89,10 +99,7 @@ local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.H
 end
 
 local function SafeNPC(str)
-local rotatedOffset = offset:rotate(Vector3.new(0,math.rad(LocPlayer.Character.HumanoidRootPart.Orientation.Y),0))
-        local newPosition = LocPlayer.Character.HumanoidRootPart.Position + rotatedOffset
-
-        str:SetPrimaryPartCFrame(CFrame.new(newPosition))
+str.HumanoidRootPart.CFrame = LocPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,Settings.distance)
 end
 
 local function Calculate(str)
@@ -396,7 +403,7 @@ _G.tte = Value
 end    
 })
 
-T4:AddToggle({
+--[[T4:AddToggle({
 Name = "Bring Asshole V1 [Testing]",
 Default = false,
 Callback = function(Value)
@@ -411,9 +418,10 @@ _G.bringAsshole1 = Value
       end
 end    
 })
+]]
 
 T4:AddToggle({
-Name = "Bring Asshole V2 [Testing]",
+Name = "Bring Enemy",
 Default = false,
 Callback = function(Value)
 _G.bringAsshole2 = Value
@@ -429,7 +437,7 @@ end
 })
 
 T4:AddToggle({
-Name = "Freeze NPC [Testing]",
+Name = "Freeze NPC",
 Default = false,
 Callback = function(Value)
 _G.Freeze = Value
