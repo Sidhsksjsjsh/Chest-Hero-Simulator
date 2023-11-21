@@ -103,6 +103,24 @@ local function SafeNPC(str)
 str.HumanoidRootPart.CFrame = LocPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,Settings.enemyd)
 end
 
+local function listenToChildrenChanges()
+    for _, minion in pairs(enemyFolder:GetChildren()) do
+        if minion:IsA("Model") and minion:FindFirstChild("Humanoid") then
+            local humanoid = minion.Humanoid
+
+            humanoid:GetPropertyChangedSignal("Position"):Connect(function()
+                local currentPosition = humanoid.Parent.Position
+                print("Posisi Minion berubah menjadi:", currentPosition)
+            end)
+        end
+    end
+end
+
+listenToChildrenChanges()
+
+enemyFolder.ChildAdded:Connect(listenToChildrenChanges)
+enemyFolder.ChildRemoved:Connect(listenToChildrenChanges)
+
 local function Calculate(str)
     return #str["Enemy_Folder"]:GetChildren()
 end
