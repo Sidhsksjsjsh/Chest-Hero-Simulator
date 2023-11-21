@@ -104,22 +104,18 @@ str.HumanoidRootPart.CFrame = LocPlayer.Character.HumanoidRootPart.CFrame * CFra
 end
 
 local function listenToChildrenChanges()
-    for _, minion in pairs(enemyFolder:GetChildren()) do
-        if minion:IsA("Model") and minion:FindFirstChild("Humanoid") then
-            local humanoid = minion.Humanoid
-
-            humanoid:GetPropertyChangedSignal("Position"):Connect(function()
-                local currentPosition = humanoid.Parent.Position
-                print("Posisi Minion berubah menjadi:", currentPosition)
+workspaceChildren(workspace["DungeonFolder"],function(v)
+   workspaceChildren(v["Enemy_Folder"],function(minion)
+	if minion:IsA("Model") and minion:FindFirstChild("Humanoid") then
+            minion.Humanoid:GetPropertyChangedSignal("Position"):Connect(function()
+                minion.Humanoid.WalkSpeed = 0
             end)
         end
-    end
+    end)
+    end)
 end
 
 listenToChildrenChanges()
-
-enemyFolder.ChildAdded:Connect(listenToChildrenChanges)
-enemyFolder.ChildRemoved:Connect(listenToChildrenChanges)
 
 local function Calculate(str)
     return #str["Enemy_Folder"]:GetChildren()
@@ -501,3 +497,10 @@ _G.gm = Value
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["MountService"]["RF"]["Normal_Gacha_Mount"]:InvokeServer("Coin")
       end
   end})
+
+workspaceChildren(workspace["DungeonFolder"],function(v)
+    workspaceChildren(v["Enemy_Folder"],function(c)
+        c.ChildAdded:Connect(listenToChildrenChanges)
+        c.ChildRemoved:Connect(listenToChildrenChanges)
+    end)
+end)
