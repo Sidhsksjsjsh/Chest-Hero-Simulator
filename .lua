@@ -8,6 +8,8 @@ local TweenService = game:GetService("TweenService")
 local number = math.huge
 local offset = Vector3.new(20,0,0)
 local enemys = nil
+local game_id = game.PlaceId
+local RaidID = 14842883897
 
 local mt = getrawmetatable(game);
 setreadonly(mt,false)
@@ -348,8 +350,11 @@ _G.InsKill = Value
         if _G.InsKill == false then break end
         workspaceChildren(workspace["DungeonFolder"],function(v)
             workspaceChildren(v["Enemy_Folder"],function(c)
-                --KillEnemy(v,c)
-                game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
+                if game_id == RaidID then
+			game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RaidFightService"]["RF"]["Start_AttackBoss"]:InvokeServer()
+		else
+			game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer({c,c,c,c,c,c,c,c,c,c})
+		end
             end)
           end)
       end
@@ -363,7 +368,11 @@ Callback = function(Value)
 _G.Killmf = Value
       while wait() do
         if _G.Killmf == false then break end
-        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	   if game_id == RaidID then
+		game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RaidFightService"]["RF"]["Start_AttackBoss"]:InvokeServer()
+	   else
+		game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["FightSystemService"]["RF"]["Start_Attack"]:InvokeServer(enemys)
+	 end
       end
   end})
 
