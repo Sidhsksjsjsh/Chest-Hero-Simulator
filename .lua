@@ -145,6 +145,26 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
+local AT4 = Window:MakeTab({
+Name = "Upgrades",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local chest = AT4:AddSection({
+Name = "CHEST UPGRADER"
+})
+
+local wing = AT4:AddSection({
+Name = "WINGS UPGRADER"
+})
+
+local AT5 = Window:MakeTab({
+Name = "Chest",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
 local D = Window:MakeTab({
 Name = "Config",
 Icon = "rbxassetid://",
@@ -347,8 +367,8 @@ _G.Killmf = Value
       end
   end})
 
-T1:AddToggle({
-Name = "Open Chest",
+AT5:AddToggle({
+Name = "Open Chest [ Non-Auto ] [ V1 ]",
 Default = false,
 Callback = function(Value)
 _G.oc = Value
@@ -357,6 +377,65 @@ _G.oc = Value
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Open_Chest"]:InvokeServer()
         LocPlayer:SetAttribute("chest_wait",0)
         LocPlayer:SetAttribute("chest_cd",0)
+      end
+  end})
+
+AT5:AddToggle({
+Name = "Open Chest [ V2 ] [ Recommended ]",
+Default = false,
+Callback = function(Value)
+if Value then
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RE"]["Show_Chest"]:FireServer()
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Start_Auto_Chest"]:InvokeServer()
+else
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RE"]["Hide_Chest"]:FireServer()
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Stop_Auto_Chest"]:InvokeServer()
+end
+end})
+
+chest:AddSlider({
+    Name = "Number of Fast Pass Uses",
+    Min = 0,
+    Max = 20,
+    Default = 1,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 1,
+    ValueName = "Consume",
+    Callback = function(Value)
+      _G.FPC = Value
+   end    
+})
+
+chest:AddToggle({
+Name = "Upgrade Chest Level",
+Default = false,
+Callback = function(Value)
+_G.clvl = Value
+      while wait() do
+        if _G.clvl == false then break end
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Chest_Upgrade"]:InvokeServer()
+      end
+  end})
+
+chest:AddToggle({
+Name = "Use Fast Pass",
+Default = false,
+Callback = function(Value)
+_G.fp = Value
+      while wait() do
+        if _G.fp == false then break end
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ChestManagerService"]["RF"]["Speed_Chest"]:InvokeServer(_G.FPC)
+      end
+  end})
+
+wing:AddToggle({
+Name = "Upgrade Wings",
+Default = false,
+Callback = function(Value)
+_G.uw = Value
+      while wait() do
+        if _G.uw == false then break end
+        game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["WingsService"]["RF"]["UpgradeWings"]:InvokeServer()
       end
   end})
 
