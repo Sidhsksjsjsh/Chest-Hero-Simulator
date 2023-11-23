@@ -10,6 +10,7 @@ local offset = Vector3.new(20,0,0)
 local enemys = nil
 local game_id = game.PlaceId
 local RaidID = 14842883897
+local RunService = game:GetService("RunService")
 
 local mt = getrawmetatable(game);
 setreadonly(mt,false)
@@ -51,6 +52,10 @@ workspaceChildren(workspace["ThePeak"]["Peak_Chest"]["RootPart"]["Attachment"],f
 		fireproximityprompt(v)
 	end
 end)
+end
+
+local function text(str,func)
+	func(str.Text)
 end
 
 local Settings = {
@@ -613,6 +618,10 @@ local peakc = AA:AddSection({
 Name = "PEAK CHEST"
 })
 
+local raid = AA:AddSection({
+Name = "RAID"
+})
+
 ugc:AddDropdown({
    Name = "Select UGC ID",
    Default = UGC_ID[1],
@@ -644,6 +653,28 @@ Callback = function()
       PeakChest()
   end    
 })
+
+local RaidTimer = raid:AddParagraph("RAID TIMER","--:--")
+raid:AddButton({
+Name = "Start Raid",
+Callback = function()
+     text(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"],function(str)
+		if str:find("Opens") then
+		   OrionLib:MakeNotification({Name = "RAID ENDED!",Content = "You have to wait until the raid reopens.",Image = "rbxassetid://",Time = 5})
+		else
+		   game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RaidService"]["RF"]["Go_Raid"]:InvokeServer()
+		end
+     end)
+  end    
+})
+
+RunService.RenderStepped:Connect(function()
+	text(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["TimeLabel"],function(str)
+		text(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"],function(o)
+			RaidTimer:Set(tostring(o) .. " " .. tostring(str),"")
+		end)
+	end)
+end)
 
 workspaceChildren(workspace["DungeonFolder"],function(v)
     workspaceChildren(v["Enemy_Folder"],function(c)
