@@ -37,6 +37,22 @@ local function stopMoving(str)
     str.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
 end
 
+local function ClaimUGC(str)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RewardService"]["RF"]["Buy_UGC"]:InvokeServer(str)
+end
+
+local function ChestLVL(str)
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["ShopService"]["RF"]["Claim_Fund"]:InvokeServer("ChestLv",str)
+end
+
+local function PeakChest()
+workspaceChildren(workspace["ThePeak"]["Peak_Chest"]["RootPart"]["Attachment"],function(v)
+	if v:IsA("ProximityPrompt") then
+		fireproximityprompt(v)
+	end
+end)
+end
+
 local Settings = {
     Height = LocPlayer:GetAttribute("Atk_Range"),
     Height1 = LocPlayer:GetAttribute("Atk_Range"),
@@ -127,7 +143,9 @@ local function CalculateRandom(str)
     return #str["Enemy_Folder"]:GetChildren()[math.random(1,#str["Enemy_Folder"]:GetChildren())]
 end
 
---chest_cd, chest_wait
+local UGC_ID = {}
+
+OrionLib:AddTable(game:GetService("ReplicatedStorage").UGCFolder,UGC_ID)
 
 local T1 = Window:MakeTab({
 Name = "Main",
@@ -169,6 +187,12 @@ PremiumOnly = false
 
 local D = Window:MakeTab({
 Name = "Config",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local AA = Window:MakeTab({
+Name = "Misc",
 Icon = "rbxassetid://",
 PremiumOnly = false
 })
@@ -576,6 +600,50 @@ _G.gm = Value
         game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["MountService"]["RF"]["Normal_Gacha_Mount"]:InvokeServer("Coin")
       end
   end})
+
+local ugc = AA:AddSection({
+Name = "UGC"
+})
+
+local levelrew = AA:AddSection({
+Name = "CHEST LEVEL REWARD"
+})
+
+local peakc = AA:AddSection({
+Name = "PEAK CHEST"
+})
+
+ugc:AddDropdown({
+   Name = "Select UGC ID",
+   Default = UGC_ID[1],
+   Options = UGC_ID,
+   Callback = function(Value)
+      _G.UGC = Value
+   end    
+})
+
+ugc:AddButton({
+Name = "Buy UGC",
+Callback = function()
+      ClaimUGC(tonumber(_G.UGC))
+  end    
+})
+
+levelrew:AddButton({
+Name = "Claim Chest Level Reward",
+Callback = function()
+      for array = 1,40 do
+	ChestLVL(array)
+      end
+  end    
+})
+
+peakc:AddButton({
+Name = "Claim Peak Chest",
+Callback = function()
+      PeakChest()
+  end    
+})
 
 workspaceChildren(workspace["DungeonFolder"],function(v)
     workspaceChildren(v["Enemy_Folder"],function(c)
