@@ -178,7 +178,9 @@ end
 
 local UGC_ID = {}
 
+if not game_id == RaidID then
 OrionLib:AddTable(game:GetService("ReplicatedStorage").UGCFolder,UGC_ID)
+end
 
 local T1 = Window:MakeTab({
 Name = "Main",
@@ -242,11 +244,12 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
-local T6 = Window:MakeTab({
+--[[local T6 = Window:MakeTab({
 Name = "X-RAY Settings",
 Icon = "rbxassetid://",
 PremiumOnly = false
 })
+]]
 
 T5:AddSlider({
   Name = "OnTop Distance",
@@ -326,7 +329,7 @@ local outlinetrans = 0
 local uselocalplayer = false
 ]]
 
-T6:AddToggle({
+--[[T6:AddToggle({
   Name = "Enable X-RAY (Enemy Only)",
   Default = false,
   Callback = function(Value)
@@ -376,7 +379,7 @@ T6:AddSlider({
   end    
 })
 
---[[T5:AddToggle({
+T5:AddToggle({
 Name = "Start Teleport",
 Default = false,
 Callback = function(Value)
@@ -717,6 +720,7 @@ local raid = AA:AddSection({
 Name = "RAID"
 })
 
+if not game_id == RaidID then
 ugc:AddDropdown({
    Name = "Select UGC ID",
    Default = UGC_ID[1],
@@ -732,6 +736,7 @@ Callback = function()
       ClaimUGC(tonumber(_G.UGC))
   end    
 })
+end
 
 levelrew:AddButton({
 Name = "Claim Chest Level Reward",
@@ -763,6 +768,7 @@ Callback = function()
   end    
 })
 
+if not game_id == RaidID then
 workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"]:GetPropertyChangedSignal("Text"):Connect(function()
 TextArray(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"],workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["TimeLabel"],function(str,array)
 	if str:lower() == "raid ends in:" or str:lower() == "raid ends in: " then
@@ -778,7 +784,9 @@ RunService.RenderStepped:Connect(function()
 		end)
 	end)
 end)
+end
 
+--[[
 RunService.RenderStepped:Connect(function()
     task.wait()
     workspaceChildren(workspace["DungeonFolder"],function(v)
@@ -803,6 +811,7 @@ RunService.RenderStepped:Connect(function()
     end)
 end)
 end)
+]]
 
 workspaceChildren(workspace["DungeonFolder"],function(v)
     workspaceChildren(v["Enemy_Folder"],function(c)
