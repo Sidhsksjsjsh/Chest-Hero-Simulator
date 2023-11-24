@@ -13,7 +13,7 @@ local RaidID = 14842883897
 local RunService = game:GetService("RunService")
 local workspace = game:GetService("Workspace")
 
-local enabled = true
+local enabled = false
 local filluseteamcolor = false
 local outlineuseteamcolor = false
 local fillcolor = Color3.new(0, 0, 0)
