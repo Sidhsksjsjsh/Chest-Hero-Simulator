@@ -11,6 +11,35 @@ local enemys = nil
 local game_id = game.PlaceId
 local RaidID = 14842883897
 local RunService = game:GetService("RunService")
+local workspace = game:GetService("Workspace")
+
+local enabled = true
+local filluseteamcolor = false
+local outlineuseteamcolor = false
+local fillcolor = Color3.new(0, 0, 0)
+local outlinecolor = Color3.new(1, 1, 1)
+local filltrans = 0
+local outlinetrans = 0
+local uselocalplayer = false
+
+local holder = game.CoreGui:FindFirstChild("NPC_ESPHolder") or Instance.new("Folder")
+if enabled == false then
+    holder:Destroy()
+end
+
+if holder.Name == "Folder" then
+    holder.Name = "NPC_ESPHolder"
+    holder.Parent = game.CoreGui
+end
+
+if uselocalplayer == false and holder:FindFirstChild(game.Players.LocalPlayer.Name) then
+    holder:FindFirstChild(game.Players.LocalPlayer.Name):Destroy()
+end
+
+if enabled == true then 
+    enabled = false
+    enabled = true
+end
 
 local mt = getrawmetatable(game);
 setreadonly(mt,false)
@@ -31,8 +60,6 @@ for _,v in pairs(str:GetChildren()) do
     func(v)
   end
 end
-
-local workspace = game:GetService("Workspace")
 
 local function stopMoving(str)
     str.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0)
@@ -218,6 +245,12 @@ Icon = "rbxassetid://",
 PremiumOnly = false
 })
 
+local T6 = Window:MakeTab({
+Name = "X-RAY Settings",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
 T5:AddSlider({
   Name = "OnTop Distance",
   Min = 0,
@@ -284,6 +317,67 @@ Default = method.Teleport,
 Callback = function(Value)
         method.Teleport = Value
 end})
+
+--[[
+local enabled = true
+local filluseteamcolor = false
+local outlineuseteamcolor = false
+local fillcolor = Color3.new(0, 0, 0)
+local outlinecolor = Color3.new(1, 1, 1)
+local filltrans = 0
+local outlinetrans = 0
+local uselocalplayer = false
+]]
+
+T6:AddToggle({
+  Name = "Enable X-RAY (Enemy Only)",
+  Default = false,
+  Callback = function(Value)
+     enabled = Value
+  end    
+})
+
+T6:AddColorpicker({
+  Name = "Fill Color",
+  Default = Color3.fromRGB(0,0,0),
+  Callback = function(Value)
+      fillcolor = Value
+  end  
+})
+
+T6:AddColorpicker({
+  Name = "Outline Color",
+  Default = Color3.fromRGB(1,1,1),
+  Callback = function(Value)
+      outlinecolor = Value
+  end  
+})
+
+T6:AddSlider({
+  Name = "Fill Transparency",
+  Min = 0,
+  Max = 1,
+  Default = 0,
+  Color = Color3.fromRGB(255,255,255),
+  Increment = 0.1,
+  ValueName = "Transparency",
+  Callback = function(Value)
+     filltrans = Value
+  end    
+})
+
+T6:AddSlider({
+  Name = "Outline Transparency",
+  Min = 0,
+  Max = 1,
+  Default = 0,
+  Color = Color3.fromRGB(255,255,255),
+  Increment = 0.1,
+  ValueName = "Transparency",
+  Callback = function(Value)
+     outlinetrans = Value
+  end    
+})
 
 --[[T5:AddToggle({
 Name = "Start Teleport",
@@ -687,6 +781,36 @@ RunService.RenderStepped:Connect(function()
 		end)
 	end)
 end)
+
+while enabled do
+    task.wait()
+    workspaceChildren(workspace["DungeonFolder"],function(v)
+         workspaceChildren(v["Enemy_Folder"],function(npc)
+           if npc:IsA("Model") then
+            local chr = npc:FindFirstChild("Humanoid")
+            if chr then
+                local esp = holder:FindFirstChild(npc.Name) or Instance.new("Highlight")
+                esp.Name = npc.Name
+                esp.Parent = holder
+                if filluseteamcolor then
+                    esp.FillColor = npc.TeamColor.Color
+                else
+                    esp.FillColor = fillcolor 
+                end
+                if outlineuseteamcolor then
+                    esp.OutlineColor = npc.TeamColor.Color
+                else
+                    esp.OutlineColor = outlinecolor    
+                end
+                esp.FillTransparency = filltrans
+                esp.OutlineTransparency = outlinetrans
+                esp.Adornee = chr.Parent
+                esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            end
+        end
+    end)
+end)
+end
 
 workspaceChildren(workspace["DungeonFolder"],function(v)
     workspaceChildren(v["Enemy_Folder"],function(c)
