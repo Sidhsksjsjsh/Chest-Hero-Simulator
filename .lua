@@ -22,12 +22,12 @@ local filltrans = 0
 local outlinetrans = 0
 local uselocalplayer = false
 
-local holder = game.CoreGui:FindFirstChild("NPC_ESPHolder") or Instance.new("Folder")
+--local holder = game.CoreGui:FindFirstChild("NPC_ESPHolder") or Instance.new("Folder")
 if enabled == false then
     holder:Destroy()
 end
 
-if holder.Name == "Folder" then
+--[[if holder.Name == "Folder" then
     holder.Name = "NPC_ESPHolder"
     holder.Parent = workspace
 end
@@ -35,6 +35,7 @@ end
 if uselocalplayer == false and holder:FindFirstChild(game.Players.LocalPlayer.Name) then
     holder:FindFirstChild(game.Players.LocalPlayer.Name):Destroy()
 end
+]]
 
 if enabled == true then 
     enabled = false
@@ -789,19 +790,11 @@ while enabled do
            if npc:IsA("Model") then
             local chr = npc:FindFirstChild("Humanoid")
             if chr then
-                local esp = holder:FindFirstChild(npc.Name) or Instance.new("Highlight")
+                local esp = Instance.new("Highlight")
                 esp.Name = npc.Name
-                esp.Parent = holder
-                if filluseteamcolor then
-                    esp.FillColor = npc.TeamColor.Color
-                else
-                    esp.FillColor = fillcolor 
-                end
-                if outlineuseteamcolor then
-                    esp.OutlineColor = npc.TeamColor.Color
-                else
-                    esp.OutlineColor = outlinecolor    
-                end
+                esp.Parent = npc
+                esp.FillColor = fillcolor 
+                esp.OutlineColor = outlinecolor    
                 esp.FillTransparency = filltrans
                 esp.OutlineTransparency = outlinetrans
                 esp.Adornee = chr.Parent
