@@ -29,7 +29,7 @@ end
 
 if holder.Name == "Folder" then
     holder.Name = "NPC_ESPHolder"
-    holder.Parent = game.CoreGui
+    holder.Parent = workspace
 end
 
 if uselocalplayer == false and holder:FindFirstChild(game.Players.LocalPlayer.Name) then
