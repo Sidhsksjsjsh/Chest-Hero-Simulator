@@ -768,7 +768,6 @@ Callback = function()
   end    
 })
 
-if not game_id == RaidID then
 workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"]:GetPropertyChangedSignal("Text"):Connect(function()
 TextArray(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"],workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["TimeLabel"],function(str,array)
 	if str:lower() == "raid ends in:" or str:lower() == "raid ends in: " then
@@ -784,7 +783,6 @@ RunService.RenderStepped:Connect(function()
 		end)
 	end)
 end)
-end
 
 --[[
 RunService.RenderStepped:Connect(function()
