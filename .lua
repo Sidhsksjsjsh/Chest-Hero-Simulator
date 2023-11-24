@@ -23,10 +23,6 @@ local outlinetrans = 0
 local uselocalplayer = false
 
 --local holder = game.CoreGui:FindFirstChild("NPC_ESPHolder") or Instance.new("Folder")
-if enabled == false then
-    holder:Destroy()
-end
-
 --[[if holder.Name == "Folder" then
     holder.Name = "NPC_ESPHolder"
     holder.Parent = workspace
@@ -783,7 +779,7 @@ RunService.RenderStepped:Connect(function()
 	end)
 end)
 
-while enabled do
+RunService.RenderStepped:Connect(function()
     task.wait()
     workspaceChildren(workspace["DungeonFolder"],function(v)
          workspaceChildren(v["Enemy_Folder"],function(npc)
@@ -799,11 +795,14 @@ while enabled do
                 esp.OutlineTransparency = outlinetrans
                 esp.Adornee = chr.Parent
                 esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+		if enabled == false then
+                   esp:Destroy()
+		end
             end
         end
     end)
 end)
-end
+end)
 
 workspaceChildren(workspace["DungeonFolder"],function(v)
     workspaceChildren(v["Enemy_Folder"],function(c)
