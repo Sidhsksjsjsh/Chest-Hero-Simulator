@@ -58,6 +58,10 @@ local function text(str,func)
 	func(str.Text)
 end
 
+local function TextArray(str,time,func)
+	func(str.Text,time.Text)
+end
+
 local Settings = {
     Height = LocPlayer:GetAttribute("Atk_Range"),
     Height1 = LocPlayer:GetAttribute("Atk_Range"),
@@ -667,6 +671,14 @@ Callback = function()
      end)
   end    
 })
+
+workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"]:GetPropertyChangedSignal("Text"):Connect(function()
+TextArray(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["Title"],workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["TimeLabel"],function(str,array)
+	if str:lower() == "raid ends in:" or str:lower() == "raid ends in: " then
+		OrionLib:MakeNotification({Name = "RAID HAS STARTED!",Content = "Raid has opened! LET'S KILL THE BOSS TO GET THE RAID TOKEN! ( Raid ends in: " .. tostring(array) .. " )",Image = "rbxassetid://",Time = 5})
+	end
+end)
+end)
 
 RunService.RenderStepped:Connect(function()
 	text(workspace["Raid"]["HitBox"]["Attachment"]["RaidBoard"]["TimeLabel"],function(str)
