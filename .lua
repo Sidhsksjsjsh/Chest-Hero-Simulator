@@ -12,6 +12,15 @@ local game_id = game.PlaceId
 local RaidID = 14842883897
 local RunService = game:GetService("RunService")
 local workspace = game:GetService("Workspace")
+local code = {
+	"iluvchesthero",
+	"swords4life",
+	"opshieldsgg",
+	"chestmaster3000",
+	"superchest8888",
+	"jackpotchest6666",
+	"tysm88all"
+}
 
 local enabled = false
 local filluseteamcolor = false
@@ -720,6 +729,10 @@ local raid = AA:AddSection({
 Name = "RAID"
 })
 
+local rc = AA:AddSection({
+Name = "REDEEM CODE"
+})
+
 if game_id ~= RaidID then
 ugc:AddDropdown({
    Name = "Select UGC ID",
@@ -751,6 +764,15 @@ peakc:AddButton({
 Name = "Claim Peak Chest",
 Callback = function()
       PeakChest()
+  end    
+})
+
+rc:AddButton({
+Name = "Redeem All Code",
+Callback = function()
+      for array = 1,#code do
+	game:GetService("ReplicatedStorage")["Packages"]["Knit"]["Services"]["RewardService"]["RF"]["CheckCode"]:InvokeServer(code[array])
+      end
   end    
 })
 
