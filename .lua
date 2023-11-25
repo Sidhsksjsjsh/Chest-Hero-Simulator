@@ -178,7 +178,7 @@ end
 
 local UGC_ID = {}
 
-if not game_id == RaidID then
+if game_id ~= RaidID then
 OrionLib:AddTable(game:GetService("ReplicatedStorage").UGCFolder,UGC_ID)
 end
 
@@ -720,7 +720,7 @@ local raid = AA:AddSection({
 Name = "RAID"
 })
 
-if not game_id == RaidID then
+if game_id ~= RaidID then
 ugc:AddDropdown({
    Name = "Select UGC ID",
    Default = UGC_ID[1],
